@@ -1,0 +1,23 @@
+package com.jupiracijunior.blog.controller;
+
+import com.jupiracijunior.blog.dto.request.ArticleRequestDTO;
+import com.jupiracijunior.blog.model.Article;
+import com.jupiracijunior.blog.services.ArticleServices;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequestMapping("/api/v1")
+public class ArtcleController {
+
+    @Autowired
+    private ArticleServices service;
+
+    @PostMapping("/posts")
+    public Article posts(@RequestBody ArticleRequestDTO articleDTO) {
+        return service.save(articleDTO);
+    }
+}

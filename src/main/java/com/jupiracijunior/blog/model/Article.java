@@ -3,6 +3,7 @@ package com.jupiracijunior.blog.model;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
@@ -12,7 +13,7 @@ public class Article {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     @Column(nullable = false, length = 255)
     private String title;
@@ -23,7 +24,7 @@ public class Article {
     @Column(nullable = false, length = 255)
     private String category;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.PERSIST)
     @JoinTable(
             name = "tagged",
             joinColumns = @JoinColumn(name = "article_id"),
@@ -31,11 +32,11 @@ public class Article {
     )
     private List<Tags> tag;
 
-    @Column
-    private LocalDate createAt;
+    @Column(name = "createAt")
+    private LocalDateTime createAt;
 
-    @Column
-    private LocalDate updateAt;
+    @Column(name = "updatedAt")
+    private LocalDateTime updateAt;
 
     public Article() {}
 
@@ -47,11 +48,11 @@ public class Article {
         this.category = category;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -79,19 +80,19 @@ public class Article {
         this.tag = tag;
     }
 
-    public LocalDate getCreateAt() {
+    public LocalDateTime getCreateAt() {
         return createAt;
     }
 
-    public void setCreateAt(LocalDate createAt) {
+    public void setCreateAt(LocalDateTime createAt) {
         this.createAt = createAt;
     }
 
-    public LocalDate getUpdateAt() {
+    public LocalDateTime getUpdateAt() {
         return updateAt;
     }
 
-    public void setUpdateAt(LocalDate updateAt) {
+    public void setUpdateAt(LocalDateTime updateAt) {
         this.updateAt = updateAt;
     }
 
@@ -99,7 +100,7 @@ public class Article {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Article article = (Article) o;
-        return id == article.id && Objects.equals(title, article.title) && Objects.equals(content, article.content) && Objects.equals(category, article.category) && Objects.equals(tag, article.tag) && Objects.equals(createAt, article.createAt) && Objects.equals(updateAt, article.updateAt);
+        return Objects.equals(id, article.id) && Objects.equals(title, article.title) && Objects.equals(content, article.content) && Objects.equals(category, article.category) && Objects.equals(tag, article.tag) && Objects.equals(createAt, article.createAt) && Objects.equals(updateAt, article.updateAt);
     }
 
     @Override
