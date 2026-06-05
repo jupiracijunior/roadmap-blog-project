@@ -19,7 +19,6 @@ public class ArticleServices {
     @Autowired
     private ArticleRepository repository;
 
-
     public Article save(ArticleRequestDTO articleDTO) {
 
         if (!Valid.isNotNull(articleDTO))
@@ -38,7 +37,7 @@ public class ArticleServices {
 
         entity.setTag(tagsArticleDTO);
         entity.setCreateAt(LocalDateTime.now());
-        entity.setUpdateAt(LocalDateTime.now());
+        entity.setUpdatedAt(LocalDateTime.now());
 
         return repository.save(entity);
     }

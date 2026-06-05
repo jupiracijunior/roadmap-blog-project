@@ -2,7 +2,6 @@ package com.jupiracijunior.blog.model;
 
 import jakarta.persistence.*;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
@@ -13,7 +12,7 @@ public class Article {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     @Column(nullable = false, length = 255)
     private String title;
@@ -36,7 +35,7 @@ public class Article {
     private LocalDateTime createAt;
 
     @Column(name = "updatedAt")
-    private LocalDateTime updateAt;
+    private LocalDateTime updatedAt;
 
     public Article() {}
 
@@ -48,11 +47,11 @@ public class Article {
         this.category = category;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -88,23 +87,23 @@ public class Article {
         this.createAt = createAt;
     }
 
-    public LocalDateTime getUpdateAt() {
-        return updateAt;
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
     }
 
-    public void setUpdateAt(LocalDateTime updateAt) {
-        this.updateAt = updateAt;
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
     }
 
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Article article = (Article) o;
-        return Objects.equals(id, article.id) && Objects.equals(title, article.title) && Objects.equals(content, article.content) && Objects.equals(category, article.category) && Objects.equals(tag, article.tag) && Objects.equals(createAt, article.createAt) && Objects.equals(updateAt, article.updateAt);
+        return Objects.equals(id, article.id) && Objects.equals(title, article.title) && Objects.equals(content, article.content) && Objects.equals(category, article.category) && Objects.equals(tag, article.tag) && Objects.equals(createAt, article.createAt) && Objects.equals(updatedAt, article.updatedAt);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, content, category, tag, createAt, updateAt);
+        return Objects.hash(id, title, content, category, tag, createAt, updatedAt);
     }
 }
