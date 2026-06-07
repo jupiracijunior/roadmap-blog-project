@@ -4,10 +4,12 @@ import com.jupiracijunior.blog.dto.request.ArticleRequestDTO;
 import com.jupiracijunior.blog.model.Article;
 import com.jupiracijunior.blog.model.Tags;
 import com.jupiracijunior.blog.repository.ArticleRepository;
+import com.jupiracijunior.blog.repository.TagRepository;
 import com.jupiracijunior.blog.utils.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.nio.file.FileSystemNotFoundException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -17,7 +19,10 @@ import java.util.List;
 public class ArticleServices {
 
     @Autowired
-    private ArticleRepository repository;
+    private ArticleRepository articleRepository;
+
+    @Autowired
+    private TagRepository tagRepository;
 
     public Article save(ArticleRequestDTO articleDTO) {
 
@@ -30,15 +35,16 @@ public class ArticleServices {
         entity.setContent(articleDTO.getContent());
         entity.setCategory(articleDTO.getCategory());
 
-        List<Tags> tagsArticleDTO = new ArrayList<>();
+        List<Tags> tagsArticleEntity = new ArrayList<>();
         for (String description : articleDTO.getTags()) {
-            tagsArticleDTO.add(Valid.converterStringToTags(description));
+            tagsArticleEntity.add(tagRepository.findByDescription(description)
+                    .orElseThrow(() -> new FileSystemNotFoundException("Tag not found")));
         }
 
-        entity.setTag(tagsArticleDTO);
+        entity.setTag(tagsArticleEntity);
         entity.setCreateAt(LocalDateTime.now());
         entity.setUpdatedAt(LocalDateTime.now());
 
-        return repository.save(entity);
+        return articleRepository.save(entity);
     }
 }

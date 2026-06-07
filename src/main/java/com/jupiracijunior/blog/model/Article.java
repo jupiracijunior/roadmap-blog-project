@@ -23,7 +23,7 @@ public class Article {
     @Column(nullable = false, length = 255)
     private String category;
 
-    @ManyToMany(cascade = CascadeType.PERSIST)
+    @ManyToMany
     @JoinTable(
             name = "tagged",
             joinColumns = @JoinColumn(name = "article_id"),
