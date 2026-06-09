@@ -12,7 +12,7 @@ public class Tags {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
     @Column(length = 255)
     private String description;
@@ -23,11 +23,11 @@ public class Tags {
 
     public Tags() {}
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -51,7 +51,7 @@ public class Tags {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Tags tags = (Tags) o;
-        return id == tags.id && Objects.equals(description, tags.description) && Objects.equals(articles, tags.articles);
+        return Objects.equals(id, tags.id) && Objects.equals(description, tags.description) && Objects.equals(articles, tags.articles);
     }
 
     @Override
