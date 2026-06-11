@@ -4,6 +4,8 @@ import com.jupiracijunior.blog.dto.request.ArticleRequestDTO;
 import com.jupiracijunior.blog.model.Article;
 import com.jupiracijunior.blog.services.ArticleServices;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -21,5 +23,11 @@ public class ArtcleController {
     @PutMapping("/posts/{id}")
     public Article posts(@RequestBody ArticleRequestDTO articleDTO, @PathVariable Integer id) {
         return service.update(articleDTO, id);
+    }
+
+    @DeleteMapping("/posts/{id}")
+    public ResponseEntity<?> delete(@PathVariable Integer id) {
+        service.delete(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }

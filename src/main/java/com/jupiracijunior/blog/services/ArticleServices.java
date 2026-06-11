@@ -6,12 +6,10 @@ import com.jupiracijunior.blog.model.Tags;
 import com.jupiracijunior.blog.repository.ArticleRepository;
 import com.jupiracijunior.blog.repository.TagRepository;
 import com.jupiracijunior.blog.utils.Valid;
-import jakarta.annotation.Nonnull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.nio.file.FileSystemNotFoundException;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -59,6 +57,11 @@ public class ArticleServices {
         entity.setUpdatedAt(LocalDateTime.now());
 
         return articleRepository.save(entity);
+    }
+
+    public void delete(Integer id) {
+        articleRepository.delete(articleRepository.findById(id)
+                .orElseThrow(() -> new FileSystemNotFoundException("Tag not found")));
     }
 
     private List<Tags> mapTags(ArticleRequestDTO articleDTO) {
