@@ -15,6 +15,11 @@ public class ArtcleController {
     @Autowired
     private ArticleServices service;
 
+    @GetMapping("/posts/{id}")
+    public Article getPost(@PathVariable Integer id) {
+        return service.getPost(id);
+    }
+
     @PostMapping("/posts")
     public Article posts(@RequestBody ArticleRequestDTO articleDTO) {
         return service.save(articleDTO);
