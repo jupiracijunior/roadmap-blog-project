@@ -23,6 +23,10 @@ public class ArticleServices {
     @Autowired
     private TagRepository tagRepository;
 
+    public List<Article> getAllArticles() {
+        return articleRepository.findAll();
+    }
+
     public Article getPost(Integer id) {
         return articleRepository.findById(id)
                 .orElseThrow(() -> new FileSystemNotFoundException("Tag not found"));
