@@ -12,13 +12,17 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1")
-public class ArtcleController {
+public class ArticleController {
 
     @Autowired
     private ArticleServices service;
 
     @GetMapping("/posts")
-    public List<Article> getAllPosts() {
+    public List<Article> getAllPosts(@RequestParam("term") String term) {
+        if (!term.isEmpty() && term != null) {
+            return service.searchByTerm(term);
+        }
+        
         return service.getAllArticles();
     }
 
@@ -28,12 +32,12 @@ public class ArtcleController {
     }
 
     @PostMapping("/posts")
-    public Article posts(@RequestBody ArticleRequestDTO articleDTO) {
+    public Article save(@RequestBody ArticleRequestDTO articleDTO) {
         return service.save(articleDTO);
     }
 
     @PutMapping("/posts/{id}")
-    public Article posts(@RequestBody ArticleRequestDTO articleDTO, @PathVariable Integer id) {
+    public Article update(@RequestBody ArticleRequestDTO articleDTO, @PathVariable Integer id) {
         return service.update(articleDTO, id);
     }
 

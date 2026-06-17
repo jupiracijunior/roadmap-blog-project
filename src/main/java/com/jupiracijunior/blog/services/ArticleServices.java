@@ -81,4 +81,8 @@ public class ArticleServices {
         }
         return tagsArticleEntity;
     }
+
+    public List<Article> searchByTerm(String term) {
+        return articleRepository.findByTagDescription(term);
+    }
 }
