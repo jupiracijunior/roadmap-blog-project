@@ -7,7 +7,13 @@ import com.jupiracijunior.blog.repository.ArticleRepository;
 import com.jupiracijunior.blog.repository.TagRepository;
 import com.jupiracijunior.blog.utils.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.nio.file.FileSystemNotFoundException;
 import java.time.LocalDateTime;
@@ -69,8 +75,11 @@ public class ArticleServices {
     }
 
     public void delete(Integer id) {
-        articleRepository.delete(articleRepository.findById(id)
-                .orElseThrow(() -> new FileSystemNotFoundException("Tag not found")));
+        if (!articleRepository.existsById(id)) {
+            throw new EmptyResultDataAccessException("Article with id " + id + " not found", 1);
+        }
+
+        articleRepository.deleteById(id);
     }
 
     private List<Tags> mapTags(ArticleRequestDTO articleDTO) {
